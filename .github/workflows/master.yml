@@ -43,5 +43,8 @@ jobs:
       - name: Build Application
         run: npm run ci:build
 
+      - name: Deploy Application
+        run: npm run deploy
+
       - name: List Files in Distribution Directory
         run: ls -R ./dist
