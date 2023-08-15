@@ -1,3 +1,16 @@
+.h1-header {
+  font-size: var(--unnamed-font-size-20);
+  font-weight: bold;
+  letter-spacing: var(--unnamed-character-spacing-0);
+}
+
+.h2-header {
+  margin-top: 4px;
+  font-size: var(--unnamed-font-size-14);
+  color: var(--grey);
+  letter-spacing: var(--unnamed-character-spacing-0);
+}
+
 .table-theme > tbody > tr:last-child {
   border-top-color: var(--dark-green);
 }
@@ -6,7 +19,40 @@
   border-bottom-color: var(--dark-green);
 }
 
+.table-theme > thead > tr > th {
+  color: var(--grey);
+}
+
 .table-theme > thead > tr > th,
 .table-theme > tbody > tr > td {
   padding: 1rem;
+}
+
+.bar-section {
+  background-color: var(--light-dark-green);
+}
+
+.mat-focused {
+  .input-label {
+    display: block;
+  }
+  .input-placeholder {
+    display: none;
+  }
+}
+
+.mat-form-field-hide-placeholder {
+  .input-label {
+    display: none;
+  }
+  .input-placeholder {
+    display: block;
+  }
+}
+
+.input-label {
+  display: block;
+}
+.input-placeholder {
+  display: none;
 }
