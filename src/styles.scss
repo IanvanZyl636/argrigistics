@@ -1,1 +1,115 @@
-/* You can add global styles to this file, and also import other style files */
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$Agrigistics-primary: mat.define-palette(mat.$indigo-palette);
+$Agrigistics-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$Agrigistics-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$Agrigistics-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $Agrigistics-primary,
+      accent: $Agrigistics-accent,
+      warn: $Agrigistics-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($Agrigistics-theme);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colors: */
+  --in-production: #00a9c9;
+  --background: #f6f6f6;
+  --border: #e0e0e0;
+  --grey: #767676;
+  --black: #212121;
+  --white: #ffffff00;
+  --light-green: #bcda84;
+  --dark-green: #00434b;
+  --darker-green: #00363c;
+
+  /* Font/text values */
+  --unnamed-font-family-poppins: Poppins;
+  --unnamed-font-style-normal: normal;
+  --unnamed-font-weight-medium: medium;
+  --unnamed-font-weight-normal: normal;
+  --unnamed-font-size-10: 10px;
+  --unnamed-font-size-14: 14px;
+  --unnamed-font-size-20: 20px;
+  --unnamed-font-size-32: 32px;
+  --unnamed-character-spacing-0: 0px;
+  --unnamed-line-spacing-16: 16px;
+  --unnamed-line-spacing-21: 21px;
+  --unnamed-line-spacing-30: 30px;
+  --unnamed-line-spacing-48: 48px;
+}
+
+/* Character Styles */
+.caption {
+  font-family: var(--unnamed-font-family-poppins);
+  font-style: var(--unnamed-font-style-normal);
+  font-weight: var(--unnamed-font-weight-normal);
+  font-size: var(--unnamed-font-size-10);
+  line-height: var(--unnamed-line-spacing-16);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--grey);
+}
+body {
+  font-family: var(--unnamed-font-family-poppins);
+  font-style: var(--unnamed-font-style-normal);
+  font-weight: var(--unnamed-font-weight-normal);
+  font-size: var(--unnamed-font-size-14);
+  line-height: var(--unnamed-line-spacing-21);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  background-color: var(--background);
+}
+.h2 {
+  font-family: var(--unnamed-font-family-poppins);
+  font-style: var(--unnamed-font-style-normal);
+  font-weight: var(--unnamed-font-weight-medium);
+  font-size: var(--unnamed-font-size-20);
+  line-height: var(--unnamed-line-spacing-30);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+}
+.h1 {
+  font-family: var(--unnamed-font-family-poppins);
+  font-style: var(--unnamed-font-style-normal);
+  font-weight: var(--unnamed-font-weight-medium);
+  font-size: var(--unnamed-font-size-32);
+  line-height: var(--unnamed-line-spacing-48);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

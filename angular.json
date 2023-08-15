@@ -25,6 +25,9 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/pre-process-styles"]
+            },
             "scripts": []
           },
           "configurations": {
@@ -81,6 +84,9 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/pre-process-styles"]
+            },
             "scripts": []
           }
         },
@@ -89,6 +95,9 @@
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

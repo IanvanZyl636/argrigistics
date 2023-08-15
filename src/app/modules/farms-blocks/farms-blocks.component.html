@@ -1,0 +1,62 @@
+<div class="flex flex-row align-middle">
+  <div>
+    <h1>Farms and Blocks</h1>
+    <h2>Manage farms and blocks and sub-blocks.</h2>
+  </div>
+  <div class="ml-auto">
+    <button>one</button>
+    <button>two</button>
+  </div>
+</div>
+<div class="flex flex-row align-middle">
+  <div>
+    <input type="text" value="Dropdown" />
+    <input type="text" value="Search" />
+  </div>
+  <div class="ml-auto">
+    <input type="checkbox" />
+    <span>Remove blocks</span>
+  </div>
+</div>
+<table class="table-theme w-full table-auto border-collapse">
+  <thead class="border-b">
+    <tr>
+      <th class="text-left">Status</th>
+      <th class="text-left">Block</th>
+      <th class="text-left">Farm</th>
+      <th class="text-left">Variant</th>
+      <th class="text-left">Ha</th>
+      <th class="text-left">Create</th>
+      <th class="text-left">Removed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="farmsBlocks$ | async as farmsBlocks">
+      <tr class="border-b border-t" *ngFor="let item of farmsBlocks">
+        <td class="text-left" [innerHTML]="item.status | farmStatus"></td>
+        <td class="text-left">{{ item.name }}</td>
+        <td class="text-left">{{ item.farmName }}</td>
+        <td class="text-left">{{ item.variant }}</td>
+        <td class="text-left">{{ item.size | number : '1.0-2' }}</td>
+        <td class="text-left">{{ item.createdAt | date : 'd/M/yyyy' }}</td>
+        <td class="text-left">{{ item.deletedAt | date : 'd/M/yyyy' }}</td>
+      </tr>
+      <tr class="border-t border-b">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>0</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+<mat-paginator
+  [length]="100"
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  aria-label="Select page"
+>
+</mat-paginator>
