@@ -19,6 +19,16 @@ export class FarmsBlocksComponent {
   private _farmNames: string[] = [];
   private _farmsBlocks: FarmModel[] = [];
 
+  filterFarmText = '';
+  selectedFarm = '';
+  searchedFarmBlock = '';
+  removedBlockToggle = false;
+  faMagnifyingGlass = faMagnifyingGlass;
+  faCaretDown = faCaretDown;
+  faTimesCircle = faTimesCircle;
+  faPlus = faPlus;
+  searchFarmFormControl = new FormControl();
+
   farmsBlocks$ = this.farmsBlocksService.getFarmsBlocks().pipe(
     tap((resp) => {
       this.setFarmNames(resp);
@@ -26,20 +36,11 @@ export class FarmsBlocksComponent {
     })
   );
 
-  filterFarmText = '';
-  selectedFarm = '';
-  searchedFarmBlock = '';
-  removedBlockToggle = false;
-  searchFarmFormControl = new FormControl();
   searchFarmBlock$ = this.searchFarmFormControl.valueChanges
     .pipe(debounceTime(2000))
     .pipe(tap((value) => (this.searchedFarmBlock = value)));
-  faMagnifyingGlass = faMagnifyingGlass;
-  faCaretDown = faCaretDown;
-  faTimesCircle = faTimesCircle;
-  faPlus = faPlus;
 
-  get filterdFarmNames(): string[] {
+  get filteredFarmNames(): string[] {
     if (this._farmNames.length <= 0) {
       return [];
     }
@@ -53,7 +54,7 @@ export class FarmsBlocksComponent {
         val.toLowerCase().indexOf(this.filterFarmText.toLowerCase()) !== -1
     );
   }
-  get filterdFarmsBlocks(): FarmModel[] {
+  get filteredFarmsBlocks(): FarmModel[] {
     if (this.selectedFarm === '') {
       return [];
     }

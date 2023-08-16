@@ -38,13 +38,14 @@
           aria-label="Number"
           matInput
           [(ngModel)]="filterFarmText"
+          (change)="!filterFarmText ? (selectedFarm = '') : null"
           [matAutocomplete]="auto"
         />
         <mat-autocomplete
           #auto="matAutocomplete"
           (optionSelected)="selectedFarm = $event.option.value"
         >
-          <mat-option *ngFor="let option of filterdFarmNames" [value]="option">
+          <mat-option *ngFor="let option of filteredFarmNames" [value]="option">
             {{ option }}
           </mat-option>
         </mat-autocomplete>
@@ -98,7 +99,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="filterdFarmsBlocks as farmsBlocksFilterd">
+  <ng-container *ngIf="filteredFarmsBlocks as farmsBlocksFilterd">
     <div class="hidden md:block">
       <table class="table-theme w-full table-auto border-collapse">
         <thead class="border-b">
