@@ -3,6 +3,7 @@ import {
   faCaretDown,
   faMagnifyingGlass,
   faTimesCircle,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime, tap } from 'rxjs/operators';
 import { FarmsBlocksService } from '../../shared/services/farms-blocks/farms-blocks.service';
@@ -36,6 +37,7 @@ export class FarmsBlocksComponent {
   faMagnifyingGlass = faMagnifyingGlass;
   faCaretDown = faCaretDown;
   faTimesCircle = faTimesCircle;
+  faPlus = faPlus;
 
   get filterdFarmNames(): string[] {
     if (this._farmNames.length <= 0) {

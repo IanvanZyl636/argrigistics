@@ -11,6 +11,19 @@
   letter-spacing: var(--unnamed-character-spacing-0);
 }
 
+.table-theme {
+  border-color: var(--grey);
+}
+
+.border-bottom-dark-green {
+  border-bottom-color: var(--dark-green);
+}
+
+.plus-icon {
+  height: 20px;
+  width: 20px;
+}
+
 .table-theme > tbody > tr:last-child {
   border-top-color: var(--dark-green);
 }
@@ -55,4 +68,8 @@
 }
 .input-placeholder {
   display: none;
+}
+
+.grid-theme {
+  border-color: var(--grey);
 }
