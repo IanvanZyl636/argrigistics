@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { FarmsBlocksRoutingModule } from './farms-blocks-routing.module';
 import { FarmsBlocksComponent } from './farms-blocks.component';
-import { FarmStatusPipe } from './pipes/farm-status.pipe';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -14,9 +13,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
+import { FarmStatusComponent } from './components/farm-status/farm-status.component';
+import { PageModule } from '../../shared/components/page/page.module';
 
 @NgModule({
-  declarations: [FarmsBlocksComponent, FarmStatusPipe],
+  declarations: [FarmsBlocksComponent, FarmStatusComponent],
   imports: [
     CommonModule,
     FarmsBlocksRoutingModule,
@@ -30,6 +31,7 @@ import { MatChipsModule } from '@angular/material/chips';
     FormsModule,
     MatChipsModule,
     ReactiveFormsModule,
+    PageModule,
   ],
   providers: [
     {

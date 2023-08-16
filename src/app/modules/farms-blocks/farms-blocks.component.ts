@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import {
   faCaretDown,
   faMagnifyingGlass,
   faTimesCircle,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { debounceTime, tap } from 'rxjs/operators';
+import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
 import { FarmsBlocksService } from '../../shared/services/farms-blocks/farms-blocks.service';
 import { FarmModel } from '../../shared/models/farm.model';
 import { FormControl } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-farms-blocks',
   templateUrl: './farms-blocks.component.html',
   styleUrls: ['./farms-blocks.component.scss'],
 })
-export class FarmsBlocksComponent {
+export class FarmsBlocksComponent implements AfterViewInit {
   private _farmNames: string[] = [];
   private _farmsBlocks: FarmModel[] = [];
 
@@ -29,12 +30,9 @@ export class FarmsBlocksComponent {
   faPlus = faPlus;
   searchFarmFormControl = new FormControl();
 
-  farmsBlocks$ = this.farmsBlocksService.getFarmsBlocks().pipe(
-    tap((resp) => {
-      this.setFarmNames(resp);
-      this._farmsBlocks = resp;
-    })
-  );
+  loading = false;
+
+  farmsBlocks$: Observable<FarmModel[]> = new Observable<FarmModel[]>();
 
   searchFarmBlock$ = this.searchFarmFormControl.valueChanges
     .pipe(debounceTime(2000))
@@ -54,6 +52,7 @@ export class FarmsBlocksComponent {
         val.toLowerCase().indexOf(this.filterFarmText.toLowerCase()) !== -1
     );
   }
+
   get filteredFarmsBlocks(): FarmModel[] {
     if (this.selectedFarm === '') {
       return [];
@@ -80,6 +79,29 @@ export class FarmsBlocksComponent {
   }
 
   constructor(private farmsBlocksService: FarmsBlocksService) {}
+
+  ngAfterViewInit() {
+    this.farmsBlocks$ = this.farmsBlocksCall();
+  }
+
+  private farmsBlocksCall() {
+    return of(null).pipe(
+      tap(() => {
+        this.loading = true;
+      }),
+      switchMap(() =>
+        this.farmsBlocksService.getFarmsBlocks().pipe(
+          tap((resp) => {
+            this.setFarmNames(resp);
+            this._farmsBlocks = resp;
+          })
+        )
+      ),
+      finalize(() => {
+        this.loading = false;
+      })
+    );
+  }
 
   private setFarmNames(farmsBlocks: FarmModel[]) {
     const distinctFarmNames: string[] = [];

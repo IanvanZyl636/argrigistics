@@ -1,0 +1,10 @@
+<ng-container *ngIf="source">
+  <div class="tooltip-container">
+    <img [src]="source" [alt]="alt" />
+    <div class="tooltip">
+      <div class="tooltip-content">
+        {{ tooltip }}
+      </div>
+    </div>
+  </div>
+</ng-container>

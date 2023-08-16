@@ -1,206 +1,221 @@
-<div class="relative" *ngIf="farmsBlocks$ | async">
-  <div class="sm:flex sm:flex-row mb-6">
-    <div>
-      <h1 class="h1-header">Farms and Blocks</h1>
-      <h2 class="h2-header">Manage farms and blocks and sub-blocks.</h2>
-    </div>
-
-    <div class="hidden ml-auto sm:flex flex-col justify-center align-middle">
+<app-page [loading]="loading">
+  <div class="relative" *ngIf="farmsBlocks$ | async">
+    <div class="sm:flex sm:flex-row mb-6">
       <div>
-        <button class="mr-4" mat-raised-button color="primary">Add Farm</button>
-        <button mat-stroked-button color="primary">Add Block</button>
+        <h1 class="h1-header">Farms and Blocks</h1>
+        <h2 class="h2-header">Manage farms and blocks and sub-blocks.</h2>
       </div>
-    </div>
-    <div
-      class="sm:hidden block fixed bottom-4 right-4 bg-light-green border-ra rounded-full p-4 z-50 cursor-pointer"
-    >
-      <div class="plus-icon flex flex-row justify-center align-middle">
-        <fa-icon [icon]="faPlus"></fa-icon>
-      </div>
-    </div>
-  </div>
 
-  <div
-    class="lg:flex md:flex-row md:align-middle md:flex-wrap bar-section pt-4 pl-4 pr-4 mb-1"
-  >
-    <div class="the-dense-zone pb-4 md:flex md:flex-row md:flex-nowrap">
-      <mat-form-field class="mr-4 md:mb-0 mb-4 w-full" appearance="outline">
-        <fa-icon
-          class="ml-4 txt-grey"
-          matTextSuffix
-          [icon]="faCaretDown"
-        ></fa-icon>
-        <mat-label class="input-placeholder">Select or type a farm</mat-label>
-        <mat-label class="input-label">Farm</mat-label>
-        <input
-          type="text"
-          placeholder="Select or type a farm"
-          aria-label="Number"
-          matInput
-          [(ngModel)]="filterFarmText"
-          (change)="!filterFarmText ? (selectedFarm = '') : null"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          (optionSelected)="selectedFarm = $event.option.value"
-        >
-          <mat-option *ngFor="let option of filteredFarmNames" [value]="option">
-            {{ option }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <mat-form-field class="w-full" appearance="outline">
-        <fa-icon
-          class="mr-4 txt-grey"
-          matTextPrefix
-          [icon]="faMagnifyingGlass"
-        ></fa-icon>
-        <mat-label class="input-placeholder">Search Columns</mat-label>
-        <mat-label class="input-label">Search</mat-label>
-        <input
-          matInput
-          placeholder="Search Columns"
-          [formControl]="searchFarmFormControl"
-          [ngModel]="searchedFarmBlock"
-        />
-      </mat-form-field>
-    </div>
-
-    <div class="pb-4 flex flex-row grow">
-      <div class="flex flex-col justify-center align-middle lg:ml-4">
-        <ng-container *ngIf="(searchFarmBlock$ | async) && searchedFarmBlock">
-          <mat-chip [highlighted]="true" (removed)="searchedFarmBlock = ''">
-            {{ searchedFarmBlock }}
-            <button
-              class="text-white"
-              matChipRemove
-              [attr.aria-label]="'remove'"
-            >
-              <fa-icon [icon]="faTimesCircle"></fa-icon>
-            </button>
-          </mat-chip>
-        </ng-container>
+      <div class="hidden ml-auto sm:flex flex-col justify-center align-middle">
+        <div>
+          <button class="mr-4" mat-raised-button color="primary">
+            Add Farm
+          </button>
+          <button mat-stroked-button color="primary">Add Block</button>
+        </div>
       </div>
       <div
-        class="flex flex-col justify-center align-middle flex-nowrap ml-auto"
+        class="sm:hidden block fixed bottom-4 right-4 bg-light-green border-ra rounded-full p-4 z-50 cursor-pointer"
       >
-        <div>
-          <mat-slide-toggle
-            class="mr-4"
-            [hideIcon]="true"
-            [(ngModel)]="removedBlockToggle"
-          ></mat-slide-toggle>
-          <span class="txt-grey whitespace-nowrap break-keep"
-            >Removed blocks</span
-          >
+        <div class="plus-icon flex flex-row justify-center align-middle">
+          <fa-icon [icon]="faPlus"></fa-icon>
         </div>
       </div>
     </div>
-  </div>
 
-  <ng-container *ngIf="filteredFarmsBlocks as farmsBlocksFilterd">
-    <div class="hidden md:block">
-      <table class="table-theme w-full table-auto border-collapse">
-        <thead class="border-b">
-          <tr>
-            <th class="text-left">Status</th>
-            <th class="text-left">Block</th>
-            <th class="text-left">Farm</th>
-            <th class="text-left">Variant</th>
-            <th class="text-left">Ha</th>
-            <th class="text-left">Create</th>
-            <th class="text-left">Removed</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngIf="farmsBlocksFilterd.length <= 0">
-            <tr>
-              <td>No data</td>
-            </tr>
-          </ng-container>
-          <ng-container *ngIf="farmsBlocksFilterd.length > 0">
-            <tr
-              class="border-b border-t"
-              *ngFor="let item of farmsBlocksFilterd"
-            >
-              <td class="text-left" [innerHTML]="item.status | farmStatus"></td>
-              <td class="text-left">{{ item.name }}</td>
-              <td class="text-left">{{ item.farmName }}</td>
-              <td class="text-left">{{ item.variant }}</td>
-              <td class="text-left">{{ item.size | number : '1.0-2' }}</td>
-              <td class="text-left">
-                {{ item.createdAt | date : 'd/M/yyyy' }}
-              </td>
-              <td class="text-left">
-                {{ item.deletedAt | date : 'd/M/yyyy' }}
-              </td>
-            </tr>
-          </ng-container>
-          <tr class="border-t border-b">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{{ sumHa(farmsBlocksFilterd) | number : '1.0-2' }}</td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="md:hidden block grid-theme">
-      <ng-container *ngIf="farmsBlocksFilterd.length > 0">
-        <ng-container *ngFor="let item of farmsBlocksFilterd">
-          <div class="flex flex-row p-4">
-            <div class="txt-grey font-bold">Status</div>
-            <div class="ml-auto" [innerHTML]="item.status | farmStatus"></div>
-          </div>
-          <div class="flex flex-row p-4 border-t">
-            <div class="txt-grey font-bold">Block</div>
-            <div class="ml-auto">{{ item.name }}</div>
-          </div>
-          <div class="flex flex-row p-4 border-t">
-            <div class="txt-grey font-bold">Farm</div>
-            <div class="ml-auto">{{ item.farmName }}</div>
-          </div>
-          <div class="flex flex-row p-4 border-t">
-            <div class="txt-grey font-bold">Variant</div>
-            <div class="ml-auto">{{ item.variant }}</div>
-          </div>
-          <div class="flex flex-row p-4 border-t">
-            <div class="txt-grey font-bold">Ha</div>
-            <div class="ml-auto">{{ item.size | number : '1.0-2' }}</div>
-          </div>
-          <div class="flex flex-row p-4 border-t">
-            <div class="txt-grey font-bold">Create</div>
-            <div class="ml-auto">{{ item.createdAt | date : 'd/M/yyyy' }}</div>
-          </div>
-          <div
-            class="flex flex-row p-4 border-t border-b border-bottom-dark-green"
+    <div
+      class="lg:flex md:flex-row md:align-middle md:flex-wrap bar-section pt-4 pl-4 pr-4 mb-1"
+    >
+      <div class="the-dense-zone pb-4 md:flex md:flex-row md:flex-nowrap">
+        <mat-form-field class="mr-4 md:mb-0 mb-4 w-full" appearance="outline">
+          <fa-icon
+            class="ml-4 txt-grey"
+            matTextSuffix
+            [icon]="faCaretDown"
+          ></fa-icon>
+          <mat-label class="input-placeholder">Select or type a farm</mat-label>
+          <mat-label class="input-label">Farm</mat-label>
+          <input
+            type="text"
+            placeholder="Select or type a farm"
+            aria-label="Number"
+            matInput
+            [(ngModel)]="filterFarmText"
+            (change)="!filterFarmText ? (selectedFarm = '') : null"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selectedFarm = $event.option.value"
           >
-            <div class="txt-grey font-bold">Removed</div>
-            <div class="ml-auto">{{ item.deletedAt | date : 'd/M/yyyy' }}</div>
-          </div>
-        </ng-container>
-        <div class="flex flex-row p-4">
-          <div class="txt-grey font-bold">Ha</div>
-          <div class="ml-auto">
-            {{ sumHa(farmsBlocksFilterd) | number : '1.0-2' }}
+            <mat-option
+              *ngFor="let option of filteredFarmNames"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline">
+          <fa-icon
+            class="mr-4 txt-grey"
+            matTextPrefix
+            [icon]="faMagnifyingGlass"
+          ></fa-icon>
+          <mat-label class="input-placeholder">Search Columns</mat-label>
+          <mat-label class="input-label">Search</mat-label>
+          <input
+            matInput
+            placeholder="Search Columns"
+            [formControl]="searchFarmFormControl"
+            [ngModel]="searchedFarmBlock"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="pb-4 flex flex-row grow">
+        <div class="flex flex-col justify-center align-middle lg:ml-4">
+          <ng-container *ngIf="(searchFarmBlock$ | async) && searchedFarmBlock">
+            <mat-chip [highlighted]="true" (removed)="searchedFarmBlock = ''">
+              {{ searchedFarmBlock }}
+              <button
+                class="text-white"
+                matChipRemove
+                [attr.aria-label]="'remove'"
+              >
+                <fa-icon [icon]="faTimesCircle"></fa-icon>
+              </button>
+            </mat-chip>
+          </ng-container>
+        </div>
+        <div
+          class="flex flex-col justify-center align-middle flex-nowrap ml-auto"
+        >
+          <div>
+            <mat-slide-toggle
+              class="mr-4"
+              [hideIcon]="true"
+              [(ngModel)]="removedBlockToggle"
+            ></mat-slide-toggle>
+            <span class="txt-grey whitespace-nowrap break-keep"
+              >Removed blocks</span
+            >
           </div>
         </div>
-      </ng-container>
-      <ng-container *ngIf="farmsBlocksFilterd.length <= 0">
-        <div class="flex flex-row p-4 border-b">No data</div>
-      </ng-container>
+      </div>
     </div>
-    <mat-paginator
-      [length]="farmsBlocksFilterd.length"
-      [pageSize]="50"
-      [pageSizeOptions]="[10, 50, 100]"
-      aria-label="Select page"
-    >
-    </mat-paginator>
-  </ng-container>
-</div>
+
+    <ng-container *ngIf="filteredFarmsBlocks as farmsBlocksFilterd">
+      <div class="hidden md:block">
+        <table class="table-theme w-full table-auto border-collapse">
+          <thead class="border-b">
+            <tr>
+              <th class="text-left">Status</th>
+              <th class="text-left">Block</th>
+              <th class="text-left">Farm</th>
+              <th class="text-left">Variant</th>
+              <th class="text-left">Ha</th>
+              <th class="text-left">Create</th>
+              <th class="text-left">Removed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="farmsBlocksFilterd.length <= 0">
+              <tr>
+                <td>No data</td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="farmsBlocksFilterd.length > 0">
+              <tr
+                class="border-b border-t"
+                *ngFor="let item of farmsBlocksFilterd"
+              >
+                <td class="text-left">
+                  <app-farm-status [status]="item.status"></app-farm-status>
+                </td>
+                <td class="text-left">{{ item.name }}</td>
+                <td class="text-left">{{ item.farmName }}</td>
+                <td class="text-left">{{ item.variant }}</td>
+                <td class="text-left">{{ item.size | number : '1.0-2' }}</td>
+                <td class="text-left">
+                  {{ item.createdAt | date : 'd/M/yyyy' }}
+                </td>
+                <td class="text-left">
+                  {{ item.deletedAt | date : 'd/M/yyyy' }}
+                </td>
+              </tr>
+            </ng-container>
+            <tr class="border-t border-b">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{ sumHa(farmsBlocksFilterd) | number : '1.0-2' }}</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="md:hidden block grid-theme">
+        <ng-container *ngIf="farmsBlocksFilterd.length > 0">
+          <ng-container *ngFor="let item of farmsBlocksFilterd">
+            <div class="flex flex-row p-4">
+              <div class="txt-grey font-bold">Status</div>
+              <div class="ml-auto">
+                <app-farm-status [status]="item.status"></app-farm-status>
+              </div>
+            </div>
+            <div class="flex flex-row p-4 border-t">
+              <div class="txt-grey font-bold">Block</div>
+              <div class="ml-auto">{{ item.name }}</div>
+            </div>
+            <div class="flex flex-row p-4 border-t">
+              <div class="txt-grey font-bold">Farm</div>
+              <div class="ml-auto">{{ item.farmName }}</div>
+            </div>
+            <div class="flex flex-row p-4 border-t">
+              <div class="txt-grey font-bold">Variant</div>
+              <div class="ml-auto">{{ item.variant }}</div>
+            </div>
+            <div class="flex flex-row p-4 border-t">
+              <div class="txt-grey font-bold">Ha</div>
+              <div class="ml-auto">{{ item.size | number : '1.0-2' }}</div>
+            </div>
+            <div class="flex flex-row p-4 border-t">
+              <div class="txt-grey font-bold">Create</div>
+              <div class="ml-auto">
+                {{ item.createdAt | date : 'd/M/yyyy' }}
+              </div>
+            </div>
+            <div
+              class="flex flex-row p-4 border-t border-b border-bottom-dark-green"
+            >
+              <div class="txt-grey font-bold">Removed</div>
+              <div class="ml-auto">
+                {{ item.deletedAt | date : 'd/M/yyyy' }}
+              </div>
+            </div>
+          </ng-container>
+          <div class="flex flex-row p-4">
+            <div class="txt-grey font-bold">Ha</div>
+            <div class="ml-auto">
+              {{ sumHa(farmsBlocksFilterd) | number : '1.0-2' }}
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="farmsBlocksFilterd.length <= 0">
+          <div class="flex flex-row p-4 border-b">No data</div>
+        </ng-container>
+      </div>
+      <mat-paginator
+        [length]="farmsBlocksFilterd.length"
+        [pageSize]="50"
+        [pageSizeOptions]="[10, 50, 100]"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </ng-container>
+  </div>
+</app-page>
