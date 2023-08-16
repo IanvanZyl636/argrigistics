@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FarmsBlocksComponent } from './farms-blocks.component';
+import { PageModule } from '../../shared/components/page/page.module';
 
 describe('FarmsBlocksComponent', () => {
   let component: FarmsBlocksComponent;
@@ -9,6 +10,7 @@ describe('FarmsBlocksComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [FarmsBlocksComponent],
+      imports: [PageModule],
     });
     fixture = TestBed.createComponent(FarmsBlocksComponent);
     component = fixture.componentInstance;
