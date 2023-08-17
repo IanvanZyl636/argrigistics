@@ -35,7 +35,7 @@ I did not focus on unit tests because it was not a requirement of the assignment
 
 Please check the formula one project in my GitHub to see how I would normally approach testing a web project
 
-For this assignment, I spend most of my time to get the design almost identical to the design.
+For this assignment, I spend most of my time to get the CSS almost identical to the design.
 
 ### CI/CD
 
