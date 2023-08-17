@@ -15,6 +15,8 @@ cd argrigistics
 
 <a href="https://github.com/FortAwesome/angular-fontawesome">angular-fontawesome</a> - Official Angular component for Font Awesome 5+ to add any free font awesome icon
 
+<a href="https://tailwindcss.com/">tailwindcss</a> - Used for my pre bundled CSS lib to create the required styles faster
+
 ### Development and CI/CD dependencies
 
 <a href="https://prettier.io/">prettier</a> - An opinionated code formatter
